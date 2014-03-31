@@ -1,1 +1,0 @@
-# Oh, My APK! - quick node.js module which hellps you to receive information about required APK file.
