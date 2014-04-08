@@ -40,12 +40,7 @@ function attemptDownload() {
         response.on('end', function () {
             exec("unzip -j -o " + tempFile + " platform-tools/aapt -d utils/", function (err) {
                 if (err) {
-                    if (attemptsLeft === 0) {
-                        throw err;
-                    } else {
-                        attemptDownload(attemptsLeft - 1);
-                        return;
-                    }
+                    return console.log(err);
                 }
                 var extractionPath = 'utils/aapt';
                 
