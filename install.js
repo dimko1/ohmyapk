@@ -6,7 +6,7 @@ var  http = require('http')
 var utilsFolder = __dirname + '/util/';
 
 //check if utils folder exist
-if (!fs.existSync(utilsFolder)){
+if (!fs.existsSync(utilsFolder)){
     fs.mkdirSync(utilsFolder);
 }
 
@@ -26,19 +26,21 @@ if (os.type() == 'Darwin') {
 }
 
 //attempt to download android tools
-function attemptDownload() {
+function downloadTools() {
     //url to android tool repository
     var urlToDownload = "http://dl-ssl.google.com/android/repository/platform-tools_r16-" + platform + ".zip";
     
     var temporaryFile = "/temp/android_tools_" + (new Date().getTime()) + ".zip";
 
-    var file = fs.createWriteStream(tempFile);
+    var file = fs.createWriteStream(temporaryFile);
 
+    //return for now. not working:)
+    return;
     //download and unzip files
-    var request = http.get(url, function(response) {
+    var request = http.get(urlToDownload, function(response) {
         response.pipe(file);
         response.on('end', function () {
-            exec("unzip -j -o " + tempFile + " platform-tools/aapt -d utils/", function (err) {
+            exec("unzip -j -o " + temporaryFile + " platform-tools/aapt -d utils/", function (err) {
                 if (err) {
                     return console.log(err);
                 }
@@ -50,9 +52,12 @@ function attemptDownload() {
                 }
 
                 fs.chmodSync(extractionPath, '755');
-                fs.unlinkSync(tempFile);
+                fs.unlinkSync(temporaryFile);
                 process.exit();
             });
         });
     });
 }
+
+downloadTools();
+
