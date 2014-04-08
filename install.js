@@ -20,7 +20,7 @@ if (os.type() == 'Darwin') {
 } else if (os.type() == 'Linux') {
     platform = 'linux';
 } else if (os.type() == 'Windows_NT'){
-    platform = 'windows';
+    platform = 'Windows';
 } else {
     throw new Error('Unable to detect operational systme!');
 }
@@ -33,4 +33,31 @@ function attemptDownload() {
     var temporaryFile = "/temp/android_tools_" + (new Date().getTime()) + ".zip";
 
     var file = fs.createWriteStream(tempFile);
+
+    //download and unzip files
+    var request = http.get(url, function(response) {
+        response.pipe(file);
+        response.on('end', function () {
+            exec("unzip -j -o " + tempFile + " platform-tools/aapt -d utils/", function (err) {
+                if (err) {
+                    if (attemptsLeft === 0) {
+                        throw err;
+                    } else {
+                        attemptDownload(attemptsLeft - 1);
+                        return;
+                    }
+                }
+                var extractionPath = 'utils/aapt';
+                
+                //add file extension
+                if (platform == 'Windows'){
+                    extractionPath += '.exe';
+                }
+
+                fs.chmodSync(extractionPath, '755');
+                fs.unlinkSync(tempFile);
+                process.exit();
+            });
+        });
+    });
 }
