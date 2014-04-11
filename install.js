@@ -22,7 +22,7 @@ if (os.type() == 'Darwin') {
 } else if (os.type() == 'Windows_NT'){
     platform = 'Windows';
 } else {
-    throw new Error('Unable to detect operational systme!');
+    throw new Error('Unable to detect operational system!');
 }
 
 //attempt to download android tools
@@ -30,21 +30,21 @@ function downloadTools() {
     //url to android tool repository
     var urlToDownload = "http://dl-ssl.google.com/android/repository/platform-tools_r16-" + platform + ".zip";
     
-    var temporaryFile = "/temp/android_tools_" + (new Date().getTime()) + ".zip";
+    //use tmp folder, otherwise will require sudo 
+    var temporaryFile = "/tmp/android_tools_" + (new Date().getTime()) + ".zip";
 
-    var file = fs.createWriteStream(temporaryFile);
-
-    //return for now. not working:)
-    return;
     //download and unzip files
     var request = http.get(urlToDownload, function(response) {
+        var file = fs.createWriteStream(temporaryFile);
         response.pipe(file);
         response.on('end', function () {
-            exec("unzip -j -o " + temporaryFile + " platform-tools/aapt -d utils/", function (err) {
+            console.log('Download completed');
+
+            exec("unzip -j -o " + temporaryFile + " platform-tools/aapt -d util/", function (err) {
                 if (err) {
                     return console.log(err);
                 }
-                var extractionPath = 'utils/aapt';
+                var extractionPath = 'util/aapt';
                 
                 //add file extension
                 if (platform == 'Windows'){

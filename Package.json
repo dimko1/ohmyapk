@@ -1,8 +1,8 @@
 {
-  "author": "Dima Maleev",
   "name": "ohmyapk",
+  "author": "Dima Maleev",
   "description": "APK file parser. Retrieve some basic information regarding APK file from AndroidManifest",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "homepage": "https://github.com/dimko1/ohmyapk",
   
   "repository": {
@@ -10,20 +10,20 @@
     "url": "https://github.com/dimko1/ohmyapk"
   },
 
-  "main": "/lib/ohmyapk.js",
+  "main": "lib/ohmyapk.js",
   "keywords": [
     "apk",
     "parser",
     "android",
     "manifest"
   ],
-  
   "scripts": {
     "install":"node install.js"
   },
 
   "dependencies": {},
   "engines": {
-    "node": "*"
+    "node": ">=0.9"
   }
+
 }
