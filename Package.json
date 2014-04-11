@@ -2,7 +2,7 @@
   "name": "ohmyapk",
   "author": "Dima Maleev",
   "description": "APK file parser. Retrieve some basic information regarding APK file from AndroidManifest",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "homepage": "https://github.com/dimko1/ohmyapk",
   
   "repository": {
